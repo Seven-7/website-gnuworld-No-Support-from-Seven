@@ -9,6 +9,10 @@
 	You can do it at your own risk.
 */
 
+extract($_REQUEST);
+extract($_SERVER);
+extract($_SESSION);
+extract($_COOKIE);
 
 $MAX_ALLOWED_USERS = 1000; // after that count, new users are locked and needs a manual unlock (resetting the count).
 
@@ -2978,17 +2982,17 @@ if ( (($reg_globs+0) == 1) || (strtolower($reg_globs) == "on") ) {
 	$bypass42 = 0;
 }
 
-if ("". phpversion() . "">="4.2.0" && !$bypass42) {
-	echo "<font size=+1><br><br>";
-	echo "Your apache server has <b>PHP ". phpversion() . "</b><br>";
-	echo "Lots of changes in 4.2 oblige us to update a lot of things.<br><br>\n";
-	echo "Fortunately, you can solve this problem by activating a now by default desactivated feature<br>\n";
-	echo "Go edit your <b>php.ini</b> file and find the line defining <b>register_globals</b>, set its value<br>";
-	echo "to <b>On</b> and then restart your apache (<b>/usr/local/apache/bin/apachectl restart</b>)<br><br>";
-	echo ".. then reload this page <b>:)</b>\n";
-	echo "</font><br>\n";
-	die;
-}
+//if ("". phpversion() . "">="4.2.0" && !$bypass42) {
+//	echo "<font size=+1><br><br>";
+//	echo "Your apache server has <b>PHP ". phpversion() . "</b><br>";
+//	echo "Lots of changes in 4.2 oblige us to update a lot of things.<br><br>\n";
+//	echo "Fortunately, you can solve this problem by activating a now by default desactivated feature<br>\n";
+//	echo "Go edit your <b>php.ini</b> file and find the line defining <b>register_globals</b>, set its value<br>";
+//	echo "to <b>On</b> and then restart your apache (<b>/usr/local/apache/bin/apachectl restart</b>)<br><br>";
+//	echo ".. then reload this page <b>:)</b>\n";
+//	echo "</font><br>\n";
+//	die;
+//}
 
 if (DEFAULT_REQUIRED_SUPPORTERS>10 || DEFAULT_REQUIRED_SUPPORTERS<0 || (DEFAULT_REQUIRED_SUPPORTERS+0)!=DEFAULT_REQUIRED_SUPPORTERS ) {
 	echo "<b>Incorrect default config.inc's value for </b>DEFAULT_REQUIRED_SUPPORTERS<b>, requires a value between 0 and 10.</b>";

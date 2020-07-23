@@ -3,7 +3,91 @@ The contents of this directory and all sub and related directories are covered
 under the GNU Public License.
 	http://www.gnu.org/licenses/gpl.txt
 
+!!!WARNING!!! I DON'T provide any support for install, bugfix, modification, asking me for any kind of question/support will result in automatic ignore !!!
+
+!!!WARNING!!! I DON'T provide any support for install, bugfix, modification, asking me for any kind of question/support will result in automatic ignore !!!
+
+!!!WARNING!!! I DON'T provide any support for install, bugfix, modification, asking me for any kind of question/support will result in automatic ignore !!!
+
+ *** ATTENTION ***
+ -- The below install instruction is untested by me, without any guarantee, without any support, *any inquiries about will result in automatic ignore* !!!
+ -- The below install instruction is the merit/credit of universalnet.org network.
+ -- Their link is: https://coder-com.universalnet.org/viewtopic.php?f=7&t=12
+ ****************************************************************************
+ Bellow you can find all the steps needed to be done in order to build thr CService (X) WebPage using Debian 7 linux server and PHP5.3.10-2 versions.
+
+1. * Change the current "sources.list" to be able to download PHP5.3.10-2 versions.
+cd /etc/apt
+mv sources.list sources.list.old
+wget http://netirc.3x.ro/seven/php/sources.list
+cd
+apt-get update
+apt-get php5=5.3.10-2
+apt-get install php5-cli=5.3.10-2
+apt-get install php5-fpm=5.3.10-2
+apt-get install php5-pgsql=5.3.10-2
+apt-get install php5-dev=5.3.10-2
+apt-get install php5-recode=5.3.10-2
+apt-get install php5-sybase=5.3.10-2
+service php5-fpm restart
+apt-get install apache2 libapache2-mod-php5 libapache2-mod-ruby libapache2-mod-perl2 libapache2-mod-python
+a2enmod rewrite
+apache2ctl -t
+service php5-fpm restart
+/etc/init.d/apache2 restart
+apt-get install mysql-server
+apt-get install phpmyadmin
+ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
+a2enmod userdir
+/etc/init.d/apache2 restart
+2. Install Postgresql 9.3.4: - Skip this step if you already have PGSQL SETUP and RUNNING.
+wget http://netirc.3x.ro/seven/postgresql-9.3.4.tar.gz
+tar zxvf postgresql-9.3.4.tar.gz
+cd postgresql-9.3.4/
+./configure --without-readline --without-zlib
+make && sudo make install
+cd
+nano /etc/ld.so.conf
+## add the following line:
+/usr/local/pgsql/lib
+## save and exit
+sudo mkdir /usr/local/pgsql/data
+chown gnuworld /usr/local/pgsql/data
+chgrp gnuworld /usr/local/pgsql/data
+su - gnuworld
+/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data
+/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data &
+## This line is useful to put in crontab, so on server reboot you get postgres running
+crontab -e
+## At the end insert:
+@reboot /usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data
+## save and exit
+
+3. We get the webpage source code from Seven Official GitHub under user gnuworld:
+git clone https://github.com/Seven-7/website-gnuworld-No-Support-from-Seven.git
+su -
+cd /var/www/html
+chmod 711 ~gnuworld
+chmod 711 ~gnuworld/website-gnuworld
+chmod 755 ~gnuworld/website-gnuworld/php_includes
+chmod 644 ~gnuworld/website-gnuworld/php_includes/config.inc
+chmod 755 ~gnuworld/website-gnuworld/docs/gnuworld/
+ln -s /home/gnuworld/website-gnuworld/docs/gnuworld live
+
 Edit file php_includes/config.inc to setup your website.
 
-Read http://coder-com.undernet.org/gnuworld-setup/ for more informations.
+3. Now you can try see the webpage in the following addresses:
+http://localhost/live
+http://127.0.0.1/live
+http://yourIP/live
 
+## edit php.ini file !
+nano /etc/php5/apache2/php.ini
+search register_globals = Off and change to register_globals = On
+service apache2 restart
+## save and exit
+
+## login with username : Admin - password : temPass
+
+This HOWTO was last updated by TheDavid
+03 Jul 2020
